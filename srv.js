@@ -38,7 +38,7 @@ app.use('*', (req, _, next) => {
     str += '?' + querystring.stringify(req.query);
   }
   str += '\n\t' + Object.entries(req.headers).map(v => `${v[0]}: ${v.slice(1)}`).join('\n\t');
-  str += '\n' + zlib.gunzipSync(req.body).toString();
+  str += '\n' + JSON.stringify(JSON.parse(zlib.gunzipSync(req.body).toString()), null, 2);
   logger.info(str);
   next();
 });
