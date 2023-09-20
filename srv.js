@@ -39,8 +39,9 @@ app.use('*', (req, _, next) => {
   next();
 });
 
-app.get('*', (_, res) => {
+app.use('*', (_, res, next) => {
   res.status(200).send();
+  next();
 });
 
 app.listen(port, () => {
