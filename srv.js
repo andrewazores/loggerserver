@@ -38,8 +38,13 @@ app.use('*', (req, _, next) => {
     str += '?' + querystring.stringify(req.query);
   }
   str += '\n\t' + Object.entries(req.headers).map(v => `${v[0]}: ${v.slice(1)}`).join('\n\t');
-  str += '\n' + JSON.stringify(JSON.parse(zlib.gunzipSync(req.body).toString()), null, 2);
-  logger.info(str);
+  const payload = zlib.gunzipSync(req.body).toString();
+  try {
+    str += '\n' + JSON.stringify(JSON.parse(payload), null, 2);
+  } catch (e) {
+    str += `\n!! ${e.message} !!\n${payload}`;
+  }
+  logger.info(str.trim());
   next();
 });
 
