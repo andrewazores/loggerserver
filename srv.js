@@ -8,6 +8,9 @@ process.on('SIGTERM', handleSignal);
 
 const express = require('express');
 const app = express();
+
+const compression = require('compression');
+
 const port = process.env.PORT || 4000;
 
 const winston = require('winston');
@@ -23,6 +26,8 @@ const logger = winston.createLogger({
 });
 
 const querystring = require('node:querystring');
+
+app.use(compression());
 
 app.use('*', (req, _, next) => {
   let str = `${req.method} ${req.path}`;
