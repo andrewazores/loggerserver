@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/nodejs-18:latest
+FROM registry.access.redhat.com/ubi8/nodejs-18-minimal:latest
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en'
 
