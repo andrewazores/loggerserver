@@ -1,3 +1,5 @@
 #!/usr/bin/sh
 
-podman run --rm -it quay.io/andrewazores/loggerserver:latest
+podman run \
+    --name loggerserver \
+    --rm -it quay.io/andrewazores/loggerserver:latest

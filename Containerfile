@@ -4,6 +4,10 @@ ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en'
 
 ENTRYPOINT ["/usr/bin/node"]
 
-COPY srv.js /app/
+CMD ["."]
 
-CMD ["/app/srv.js"]
+COPY package.json .
+COPY package-lock.json .
+RUN npm ci
+
+COPY srv.js .

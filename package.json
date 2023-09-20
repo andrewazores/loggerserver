@@ -1,0 +1,22 @@
+{
+  "name": "loggerserver",
+  "version": "0.0.1",
+  "description": "",
+  "main": "srv.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewazores/loggerserver.git"
+  },
+  "author": "Andrew Azores",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andrewazores/loggerserver/issues"
+  },
+  "homepage": "https://github.com/andrewazores/loggerserver#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
