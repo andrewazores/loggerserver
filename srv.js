@@ -10,6 +10,7 @@ const express = require('express');
 const app = express();
 
 const compression = require('compression');
+const zlib = require('node:zlib');
 
 const port = process.env.PORT || 4000;
 
@@ -28,6 +29,7 @@ const logger = winston.createLogger({
 const querystring = require('node:querystring');
 
 app.use(compression());
+app.use(express.raw({ type: '*/*' }));
 
 app.use('*', (req, _, next) => {
   let str = `${req.method} ${req.path}`;
@@ -35,6 +37,7 @@ app.use('*', (req, _, next) => {
     str += '?' + querystring.stringify(req.query);
   }
   str += '\n\t' + Object.entries(req.headers).map(v => `${v[0]}: ${v.slice(1)}`).join('\n\t');
+  str += '\n' + zlib.gunzipSync(req.body).toString();
   logger.info(str);
   next();
 });
