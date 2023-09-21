@@ -38,11 +38,16 @@ app.use('*', (req, _, next) => {
     str += '?' + querystring.stringify(req.query);
   }
   str += '\n\t' + Object.entries(req.headers).map(v => `${v[0]}: ${v.slice(1)}`).join('\n\t');
-  const payload = zlib.gunzipSync(req.body).toString();
+  let payload = req.body;
+  let unzip;
   try {
-    str += '\n' + JSON.stringify(JSON.parse(payload), null, 2);
+    unzip = zlib.gunzipSync(payload).toString();
+    str += '\n' + JSON.stringify(JSON.parse(unzip), null, 2);
   } catch (e) {
-    str += `\n!! ${e.message} !!\n${payload}`;
+    str += `\n!! ${e.message} !!\n${typeof payload === 'object' ? JSON.stringify(payload) : payload}`;
+    if (unzip) {
+      str += `\n\t-> '${unzip.trim()}'`;
+    }
   }
   logger.info(str.trim());
   next();
